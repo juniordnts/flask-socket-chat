@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Quest de Sala</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
+      aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse container" id="main-navbar">
+      <a class="navbar-brand" href="">Q</a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/criar">Criar Quest</a>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
+
+
+  <div class="container">
+    <h5 class="my-4">Código da Quest</h5>
+    <input type="text" class="form-control mb-3 w-25" id="codigo" placeholder="Código">
+    <input type="text" class="form-control mb-3 w-25" id="nome" placeholder="Seu Nome">
+    <button class="btn btn-success" id="create">Abrir</button>
+  </div>
+
+  <div id="quest-board">
+
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+  <script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    $("#create").click(function (e) {
+      e.preventDefault();
+      $.post("/api/entrar", { key: $("#codigo").val(), id: socket.id, nome: $("#nome").val() })
+        .done(function (data) {
+          console.log(data);
+        })
+        .fail(function (err) {
+          console.warn("Erro");;
+        })
+        .always(function (data) {
+        })
+    });
+  </script>
+
+</body>
+
+</html>
